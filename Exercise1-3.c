@@ -2,31 +2,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-char next[100] = "   \n\t  \t \r\n Hello";
+char* next;
 
-int space(){
-  static unsigned int space_indexer = 0;
-  switch(space_indexer){
-    case ' ':
-      memmove(&next[space_indexer], &next[space_indexer+1], strlen(&next[space_indexer+1])+1);
-      break;
-    case '\t':
-      memmove(&next[space_indexer], &next[space_indexer+1], strlen(&next[space_indexer+1])+1);
-      break;
-    case '\n':
-      memmove(&next[space_indexer], &next[space_indexer+1], strlen(&next[space_indexer+1])+1);
-      break;
-    case '\r':
-      memmove(&next[space_indexer], &next[space_indexer+1], strlen(&next[space_indexer+1])+1);
-      break;
-    default:
-      printf("Error");
-      return 1;
+void space(){
+  char ignore[] = {'\n', '\t', '\r', ' '};
+  while(1){
+    int eaten = 0;
+    for(int i=0; i<4; i++){
+      if(*next == ignore[i]){
+        next++;
+        eaten = 1;
+      }
+    }
+    if(!eaten) break;
   }
-  return 0;
 }
 
 int main(){
+  next = "   \n\t  \t \r\n Hello";
   space();
   printf("Remaining: '%s'\n", next);
   return 0;

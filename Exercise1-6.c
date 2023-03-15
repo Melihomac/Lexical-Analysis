@@ -2,25 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-char next[100] = "skipy := 1";
+char* next;
 
 int keyword(char s){
-  static unsigned int string_indexer = 0;
-  if(s == next[string_indexer]){
-    memmove(&next[string_indexer], &next[string_indexer+1], strlen(&next[string_indexer+1])+1);
+  char *tmp = next;
+  if(munch(s) && !letter()){
     return 1;
   }
-  string_indexer++;
+  next = tmp;
   return 0;
 }
 
-int main(){
-  if(keyword('s')){
-    keyword('k');
-    keyword('i');
-    keyword('p');
-    keyword('y');
-  }
+void main(){
+  next = "skipy := 1";
+  if(keyword("skip")) printf("Eaten a 'skip'\n");
+  if(var()) printf("Eaten a variable\n");
   printf("Remaining: '%s'\n", next);
-  return 0;
 }
